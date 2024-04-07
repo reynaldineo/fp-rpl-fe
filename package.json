@@ -16,10 +16,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "clsx": "^2.1.0",
     "cssnano": "^6.0.3",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.4",
