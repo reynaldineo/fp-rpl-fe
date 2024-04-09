@@ -9,10 +9,12 @@ enum ButtonVariant {
   'success',
   'danger',
   'warning',
+  'base',
   'outline-primary',
   'outline-success',
   'outline-danger',
   'outline-warning',
+  'outline-base',
 }
 enum ButtonSize {
   'sm',
@@ -74,7 +76,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           //#region  //*=========== Variants ===========
           [
             variant === 'primary' && [
-              'border text-typo',
+              'border text-white',
               'bg-primary-500',
               'focus:border-primary-600 focus:bg-primary-400',
               'hover:bg-primary-600',
@@ -82,7 +84,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
             variant === 'success' && [
-              'border text-typo',
+              'border text-white',
               'bg-secondary-500',
               'focus:border-secondary-600 focus:bg-secondary-400',
               'hover:bg-secondary-600',
@@ -90,7 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
             variant === 'danger' && [
-              'border text-typo',
+              'border text-white',
               'bg-red-500',
               'focus:border-red-600 focus:bg-red-400',
               'hover:bg-red-600',
@@ -98,11 +100,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
             variant === 'warning' && [
-              'border text-typo',
+              'border text-white',
               'bg-yellow-500',
               'focus:border-yellow-600 focus:bg-yellow-400',
               'hover:bg-yellow-600',
               'active:border-yellow-300 active:bg-yellow-700',
+              'disabled:bg-typo-tertiary disabled:text-typo-secondary',
+            ],
+            variant === 'base' && [
+              'border text-white',
+              'bg-base-500',
+              'focus:border-base-600 focus:bg-base-400',
+              'hover:bg-base-600',
+              'active:border-base-300 active:bg-base-700',
               'disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
             variant === 'outline-primary' && [
@@ -129,14 +139,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'hover:bg-red-50',
               'disabled:bg-transparent disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
-            variant === 'outline-warning' && [
-              'text-warning-main',
-              'border-warning-main border',
+            variant === 'outline-base' && [
+              'text-base-500',
+              'border-2 border-base-500',
               'bg-transparent',
-              'hover:bg-transparent',
-              'active:shadow-inner',
-              'hover:bg-warning-focus',
-              'disabled:border-neutral-30 disabled:text-neutral-70 disabled:bg-transparent',
+              'active:bg-base-100',
+              'hover:bg-base-50',
+              'disabled:bg-transparent disabled:bg-typo-tertiary disabled:text-typo-secondary',
             ],
           ],
           //#endregion  //*======== Variants ===========
