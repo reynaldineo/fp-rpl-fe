@@ -2,16 +2,23 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily: {
+        'button-medium': 'Poppins',
+        'text-12-semibold': 'Inter',
         poppins: ['var(--font-poppins)'],
       },
       colors: {
+        ivory: '#fafae6',
+        lightseagreen: '#62baac',
+        black: '#000',
         primary: {
           50: '#E6F2F2',
           //* Background
@@ -29,6 +36,12 @@ const config: Config = {
           800: '#405E5F',
           900: '#2B3F3F',
         },
+        'cadetblue': "#4d8a8a",
+        'neutral-10': "#fff",
+        'base-inline': "#d1d5dc",
+        'base-icon': "#9aa2b1",
+        'critical-icon': "#ff4d4d",
+        'base-primary': "#092540",
         secondary: {
           50: '#EDF8EB',
           //* Background
@@ -72,13 +85,39 @@ const config: Config = {
           outline: '#D9D9D9',
         },
       },
+      spacing: {},
+      fontSize: {
+        base: '16px',
+        sm: '14px',
+        xs: '12px',
+        xl: '20px',
+        '41xl': '60px',
+        inherit: 'inherit',
+      },
+      screens: {
+        mq1275: {
+          raw: 'screen and (max-width: 1275px)',
+        },
+        mq1100: {
+          raw: 'screen and (max-width: 1100px)',
+        },
+        mq750: {
+          raw: 'screen and (max-width: 750px)',
+        },
+        mq450: {
+          raw: 'screen and (max-width: 450px)',
+        },
+      },
+      corePlugins: {
+        preflight: false,
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },
   plugins: [],
 };
+
 export default config;
