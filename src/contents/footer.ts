@@ -19,7 +19,7 @@ export const footerLinks: FooterLinks = [
   },
   {
     name: 'Course',
-    href: '/',
+    href: '/course',
   },
 ];
 
