@@ -10,6 +10,6 @@ export const navbarLinks: NavbarLinks = [
   },
   {
     name: 'Course',
-    href: '/',
+    href: '/course',
   },
 ];

@@ -49,7 +49,7 @@ export default function Footer() {
           <div className='space-y-3'>
             {footerLinks.map((link) => (
               <div key={link.name}>
-                <Link href={link.name}>
+                <Link href={link.href}>
                   <Typography
                     as='p'
                     variant='p'
