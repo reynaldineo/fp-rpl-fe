@@ -6,7 +6,7 @@ type NavbarLinks = {
 export const navbarLinks: NavbarLinks = [
   {
     name: 'Shop',
-    href: '/',
+    href: '/shop',
   },
   {
     name: 'Course',

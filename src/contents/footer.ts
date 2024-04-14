@@ -15,7 +15,7 @@ type FooterLinks = {
 export const footerLinks: FooterLinks = [
   {
     name: 'Shop',
-    href: '/',
+    href: '/shop',
   },
   {
     name: 'Course',
