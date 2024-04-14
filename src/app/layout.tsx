@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
+import Provider from '@/app/provider/provider';
 import clsxm from '@/lib/clsxm';
 
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='id' className='scroll-smooth'>
-      <body className={clsxm(poppins.variable)}>{children}</body>
+      <Provider>
+        <body className={clsxm(poppins.variable)}>{children}</body>
+      </Provider>
     </html>
   );
 }

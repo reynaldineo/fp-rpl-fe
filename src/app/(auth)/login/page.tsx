@@ -8,12 +8,17 @@ import Input from '@/components/form/Input';
 import PrimaryLink from '@/components/links/PrimaryLink';
 import Typography from '@/components/Typography';
 import { REGEX } from '@/constants/regex';
+import LoginHook from '@/hooks/auth/login';
+import { LoginForm } from '@/types/auth/login';
 
 export default function LoginPage() {
-  const methods = useForm();
+  //#region  //*=========== Form ===========
+  const methods = useForm<LoginForm>();
   const { handleSubmit } = methods;
-  // eslint-disable-next-line no-console
-  const onSubmit = (data: unknown) => console.log(data);
+
+  //#region  //*=========== On Submit ===========
+  const { loginMutation, isPending } = LoginHook();
+  const onSubmit = (data: LoginForm) => loginMutation(data);
 
   return (
     <section className='mx-5'>
@@ -62,6 +67,7 @@ export default function LoginPage() {
                 type='submit'
                 className='mt-8 w-full px-3 py-2 text-white md:mt-10'
                 variant='primary'
+                isLoading={isPending}
               >
                 Masuk
               </Button>
@@ -70,7 +76,7 @@ export default function LoginPage() {
                 variant='btn'
                 className='flex items-center justify-center'
               >
-                Belum punya akun?{' '}
+                Belum punya akun?&nbsp;
                 <Link href='/register' className='text-primary-500 underline'>
                   Daftar
                 </Link>
