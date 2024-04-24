@@ -16,6 +16,7 @@ export type SelectInputProps = {
   validation?: RegisterOptions;
   readOnly?: boolean;
   placeholder?: string;
+  containerClassName?: string;
 } & React.ComponentPropsWithoutRef<'select'>;
 
 export default function SelectInput({
@@ -25,6 +26,7 @@ export default function SelectInput({
   hideError = false,
   validation,
   className,
+  containerClassName,
   readOnly = false,
   defaultValue = '',
   placeholder = '',
@@ -41,7 +43,7 @@ export default function SelectInput({
   const value = watch(id);
 
   return (
-    <div className='w-full space-y-1.5 rounded-md'>
+    <div className={clsxm('w-full space-y-1.5 rounded-md', containerClassName)}>
       {label && (
         <LabelText required={validation?.required ? true : false}>
           {label}

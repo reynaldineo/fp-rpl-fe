@@ -15,6 +15,15 @@ export type ApiResponse<T = undefined> = {
   data: T;
 };
 
+export type ApiPaginatedResponse<T = undefined> = {
+  success: boolean;
+  message: string;
+  data: T;
+  pageNumber: number;
+  pageSize: number;
+  maxPage: number;
+};
+
 export type ApiError = AxiosError<{
   message: string;
 }>;
