@@ -1,14 +1,23 @@
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
+import { getCourseType } from '@/types/course';
 
-export default function VideoCard({ index }: { index: number }) {
+export default function VideoCard({
+  index,
+  videoCardData,
+}: {
+  index: number;
+  videoCardData: getCourseType;
+}) {
   return (
     <div>
       <div className='p-1 md:p-3'>
         <div className='flex rounded-2xl bg-white hover:bg-primary-200'>
           <div className='h-[130px] w-[350px] rounded-xl p-4 md:h-[130px] md:w-[290px]'>
             <NextImage
-              src='/videocourse.jpg'
+              useSkeleton
+              serverStaticImg
+              src={videoCardData.img_cover}
               alt='Videocourse Image'
               width={410}
               height={210}
@@ -16,23 +25,24 @@ export default function VideoCard({ index }: { index: number }) {
               imgClassName='h-full w-full rounded-lg object-fill'
             />
           </div>
-          <div className='space-y-1 py-4 pr-4'>
+          <div className='w-full space-y-1 py-4 pr-4'>
             <Typography
               as='h6'
-              variant='h6'
-              weight='medium'
-              className='text-lg'
+              variant='p'
+              weight='semibold'
+              className=' text-lg'
             >
-              Recomended Video
+              {videoCardData.title.slice(0, 40)}
+              {videoCardData.title.length > 40 && '...'}
             </Typography>
             <Typography
               as='p'
               variant='btn'
               weight='regular'
-              className='text-justify text-sm'
+              className='text-wrap text-justify text-sm'
             >
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-              ipsa!
+              {videoCardData.caption.slice(0, 80)}
+              {videoCardData.caption.length > 100 && '...'}
             </Typography>
           </div>
         </div>
