@@ -1,9 +1,9 @@
 import NextImage from '@/components/NextImage';
 import Typography from '@/components/Typography';
-import { ItemCard } from '@/contents/shop/itemCard';
 import clsxm from '@/lib/clsxm';
+import { getShopType } from '@/types/shop';
 
-export default function ShopCard({ itemCard }: { itemCard: ItemCard }) {
+export default function ShopCard({ itemCard }: { itemCard: getShopType }) {
   return (
     <div
       className={clsxm(
@@ -13,12 +13,13 @@ export default function ShopCard({ itemCard }: { itemCard: ItemCard }) {
     >
       <div className='mx-auto h-[176px] w-full rounded-lg bg-[#D9D9D9] md:h-[209px] md:w-[199px]'>
         <NextImage
-          src={itemCard.image}
+          serverStaticImg
+          src={itemCard.img_url}
           alt='Shop Item Image'
           width={199}
           height={209}
-          className='flex h-full w-full items-center justify-center rounded-lg object-cover'
-          imgClassName='rounded-lg my-auto '
+          className='h-full w-full max-w-[199px] rounded-t-lg object-cover'
+          imgClassName='h-full w-full max-w-[199px] rounded-t-lg object-fill'
           useSkeleton
         />
       </div>
@@ -31,7 +32,7 @@ export default function ShopCard({ itemCard }: { itemCard: ItemCard }) {
             weight='semibold'
             className='text-justify text-base'
           >
-            {itemCard.title}
+            {itemCard.name}
           </Typography>
           <Typography
             as='p'
@@ -39,7 +40,8 @@ export default function ShopCard({ itemCard }: { itemCard: ItemCard }) {
             weight='regular'
             className='text-justify text-xs '
           >
-            {itemCard.description}
+            {/* {itemCard.description} */}
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </Typography>
         </div>
         <Typography
