@@ -1,10 +1,22 @@
+'use client';
+
 import Button from '@/components/buttons/Button';
+import withAuth from '@/components/hoc/withAuth';
 import ImagePreview from '@/components/ImagePreview';
 import MainLayout from '@/components/layout/MainLayout';
+import Loading from '@/components/Loading';
 import Typography from '@/components/Typography';
+import HookGetStoreById from '@/hooks/shop/getShopById';
 import clsxm from '@/lib/clsxm';
 
-export default function DetailShopPage() {
+export default withAuth(DetailShopPage);
+function DetailShopPage({ params }: { params: { idShop: string } }) {
+  //#region  //*=========== Get Shop ===========
+  const { data } = HookGetStoreById(params.idShop);
+  const detailData = data?.data.data;
+
+  if (!detailData) return <Loading />;
+
   return (
     <MainLayout withNavbar withFooter>
       <section
@@ -14,11 +26,9 @@ export default function DetailShopPage() {
         )}
       >
         {/* Section IMG */}
-        <section>
+        <section className='order-1'>
           <ImagePreview
-            src={
-              'https://res.cloudinary.com/dczynccd0/image/upload/v1713172600/course/img_cover/0869f4df-2da3-4230-8f98-7b0d27e41dd5.jpg'
-            }
+            src={detailData.img_url}
             width={500}
             height={420}
             imgClassName='w-[300px] md:w-[450px]'
@@ -27,7 +37,7 @@ export default function DetailShopPage() {
         </section>
 
         {/* Section Detail */}
-        <section>
+        <section className='order-1'>
           <div>
             <Typography
               as='h5'
@@ -35,7 +45,7 @@ export default function DetailShopPage() {
               weight='semibold'
               className='text-2xl'
             >
-              Title Here Lorem Ipseum
+              {detailData.name}
             </Typography>
             <Typography
               as='p'
@@ -43,7 +53,7 @@ export default function DetailShopPage() {
               weight='medium'
               className='pt-2 text-base md:pt-2'
             >
-              Tersisa 120pcs
+              Tersisa {detailData.stock} barang
             </Typography>
             <Typography
               as='h4'
@@ -51,16 +61,13 @@ export default function DetailShopPage() {
               weight='bold'
               className='pt-2 text-3xl md:pt-3'
             >
-              RP 999.999
+              RP {detailData.price}
             </Typography>
           </div>
 
           <div className='mt-5 md:mt-6'>
             <Typography as='p' variant='t' className='text-justify'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-              porro officia excepturi iure hic sapiente quod autem illum culpa
-              aperiam nemo eligendi! Mollitia perferendis incidunt libero!
-              Veritatis voluptates labore tempora?
+              {detailData.description}
             </Typography>
           </div>
 

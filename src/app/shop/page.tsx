@@ -1,33 +1,49 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import PaginationControl from '@/app/course/components/PaginationControl';
 import ShopCard from '@/app/shop/components/ShopCard';
+import Button from '@/components/buttons/Button';
 import Input from '@/components/form/Input';
-import SearchableSelectInput from '@/components/form/SearchableSelectInput';
+import SelectInput from '@/components/form/SelectInput';
 import MainLayout from '@/components/layout/MainLayout';
+import Loading from '@/components/Loading';
 import Typography from '@/components/Typography';
-import { itemCard } from '@/contents/shop/itemCard';
+import HookGetShop from '@/hooks/shop/getShop';
+
+type searchType = {
+  page: number;
+  size: number;
+  search: string;
+};
 
 export default function ShopPage() {
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-    { value: 'option4', label: 'Option 4' },
-    { value: 'option5', label: 'Option 5' },
-  ];
+  const [search, setSearch] = useState<string>('');
+  const [sizeValue, setSizeValue] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
 
-  const methods = useForm({
-    mode: 'onSubmit',
+  //#region  //*=========== Form ===========
+  const methods = useForm<searchType>({
+    mode: 'onChange',
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (data: unknown) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    return;
+  //#region  //*=========== Get Shop ===========
+  const { data: getShopData, refetch } = HookGetShop({
+    page: page, // page number
+    size: sizeValue, // page size
+    search,
+  });
+
+  const shopData = getShopData?.data.data;
+  if (!shopData) return <Loading />;
+
+  const onSubmit = (data: searchType) => {
+    setSearch(data.search);
+    refetch();
   };
 
   return (
@@ -54,48 +70,77 @@ export default function ShopPage() {
         </div>
 
         {/* Filter */}
-        <section className='mt-9 px-3 md:mt-14 md:px-0'>
+        <section className='mt-9 md:mt-14'>
           <FormProvider {...methods}>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className='flex w-full flex-col space-y-5 md:flex-row md:items-center md:justify-between md:space-x-28 md:space-y-0'
             >
-              <SearchableSelectInput
-                id='multipleSelectInputReadOnly'
+              <SelectInput
+                id='filter'
                 label=''
                 placeholder='Filter'
-                options={options}
-                isMulti
-                containerClassName='w-1/4 hidden md:block'
-              />
+                // onChange={(e) => {
+                //   setSizeValue(e.target.value);
+                //   refetch();
+                // }}
+                containerClassName='md:w-1/4 hidden md:block'
+              >
+                <option value='a'>...</option>
+                <option value='b'>...</option>
+              </SelectInput>
 
-              <Input id='text' label='' placeholder='Search' className='' />
+              <div className='flex w-full space-x-2'>
+                <Input id='search' label='' placeholder='Search' className='' />
+                <Button type='submit' className='w-1/4 md:w-auto'>
+                  Search
+                </Button>
+              </div>
 
-              <SearchableSelectInput
-                id='multipleSelectInputReadOnly'
+              <SelectInput
+                id='limit'
                 label=''
                 placeholder='Entries'
-                options={options}
-                isMulti
+                onChange={(e) => {
+                  setSizeValue(Number(e.target.value));
+                  refetch();
+                }}
                 containerClassName='md:w-1/4 hidden md:block'
-              />
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={30}>30</option>
+              </SelectInput>
 
               {/* Mobile version */}
               <div className='flex justify-between md:hidden '>
-                <SearchableSelectInput
-                  id='multipleSelectInputReadOnly'
+                <SelectInput
+                  id='filter'
                   label=''
                   placeholder='Filter'
-                  options={options}
-                  isMulti
-                />
-                <SearchableSelectInput
-                  id='multipleSelectInputReadOnly'
+                  // onChange={(e) => {
+                  //   setSizeValue(e.target.value);
+                  //   refetch();
+                  // }}
+                  containerClassName='w-1/3 '
+                >
+                  <option value=''>...</option>
+                  <option value=''>...</option>
+                </SelectInput>
+                <SelectInput
+                  id='limit'
                   label=''
                   placeholder='Entries'
-                  options={options}
-                  isMulti
-                />
+                  onChange={(e) => {
+                    setSizeValue(Number(e.target.value));
+                    refetch();
+                  }}
+                  containerClassName='w-1/3 '
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={30}>30</option>
+                </SelectInput>
               </div>
             </form>
           </FormProvider>
@@ -103,7 +148,7 @@ export default function ShopPage() {
 
         {/* Card */}
         <section className='mt-10 grid grid-cols-2 gap-2 md:grid-cols-5 md:gap-y-8 '>
-          {itemCard.map((item) => (
+          {shopData.map((item) => (
             <Link
               href={`/shop/${item.id}`}
               key={item.id}
@@ -112,6 +157,18 @@ export default function ShopPage() {
               <ShopCard itemCard={item} />
             </Link>
           ))}
+        </section>
+
+        {/* Pagination */}
+        <section>
+          <PaginationControl
+            page_number={getShopData.data.pageNumber ?? 1}
+            max_page={getShopData.data.maxPage ?? 1}
+            setPageNumber={(page) => {
+              setPage(page);
+              refetch();
+            }}
+          />
         </section>
       </section>
     </MainLayout>
